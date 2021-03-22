@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<main id="chat" onload="check()">
+<main id="chat">
     <div id="chat-container">
         <h1>Local Chat</h1>
             <div id="messages">
@@ -30,6 +30,8 @@
 
 {% block script %}
 <script>
+    window.onload = check;
+
     function check(){
                 fetch(`${window.origin}/check`, {
                     method: "POST",

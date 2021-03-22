@@ -35,10 +35,13 @@ class Chat(db.Model):
 
 @app.route("/")
 def home():
+    global old_amount
+    
     if "name" not in session:
         return redirect(url_for("login"))
     
     data = Chat.query.all()
+    old_amount = len(data)
     return render_template("chat.html", messages=data, user=session["name"])
 
 @app.route("/login", methods=["POST", "GET"])
