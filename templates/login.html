@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main id="login-content">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <div id="login">
+        <h1>LOGIN</h1>
+        <form method="POST">
+            <input type="text" name="username" required placeholder="Username" minlength="3" maxlength="49"/>
+            <input type="password" name="password" required placeholder="Password" minlength="8" maxlength="49"/>
+            <button type="submit" id="login-button">Enter</button>
+        </form>
+        <h5 id="switch_to_register">Not a member? - Register Here</h5>
+    </div>
+    <div id="register">
+        <h1>REGISTER</h1>
+        <form method="POST" id="forma">
+            <input type="text" name="register-username" required placeholder="Username" minlength="3" maxlength="49"/>
+            <input type="password" name="register-password" required placeholder="Password" minlength="8" maxlength="49"/>
+            <button type="submit" id="register-button" 
+            
+            class="g-recaptcha"
+            data-sitekey="6LcfD4oaAAAAAA8S8SrzSsrPwoCeamYDKIro_oTz" 
+            data-callback='onSubmit' 
+            data-action='submit'>Enter</button>
+        </form>
+        <h5 id="switch_to_login">Already a member? - Login Here</h5>
+    </div>
+</main>
+{% endblock %}
+
+{% block script %}
+<script src="https://www.google.com/recaptcha/api.js"></script> 
+
+<script>
+    function onSubmit(token) {
+        document.getElementById("forma").submit();
+   }
+
+    $("#switch_to_register").click(function (){
+        $("#login").fadeOut(1000, function (){
+            $("#register").fadeIn(1000, function() {});
+        });
+    });
+
+    $("#switch_to_login").click(function (){
+        $("#register").fadeOut(1000, function (){
+            $("#login").fadeIn(1000, function() {});
+        });
+    });
+</script>
+{% endblock %}

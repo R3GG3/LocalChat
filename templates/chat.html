@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<main id="chat" onload="check()">
+    <div id="chat-container">
+        <h1>Local Chat</h1>
+            <div id="messages">
+                {% for message in messages %}
+                    {% if message.author != user %}
+                        <div class="message">
+                            <h2>{{message.author}}</h2>
+                            <h3>{{message.message}}</h3>
+                            <h4>{{message.date}}</h4>
+                        </div>
+                    {% endif %}
+                    {% if message.author == user %}
+                        <div class="message-self">
+                            <h2>{{message.author}}</h2>
+                            <h3>{{message.message}}</h3>
+                            <h4>{{message.date}}</h4>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div id="user-panel">
+                <textarea cols="80" rows="3" style="text-align: left; resize: none;" id="send-text"></textarea><input type="button" value="Send" onclick="send_message()"/>
+            </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block script %}
+<script>
+    function check(){
+                fetch(`${window.origin}/check`, {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify({"status": 0}),
+                    cache: "no-cache",
+                    headers: new Headers({
+                        "content-type": "application/json"
+                    })
+
+                })
+
+                .then(function (response){
+                    if (response.status !== 200){
+                        console.log("Status is not 200!");
+                        return ;
+                    }
+                    response.json().then(function (data){
+                        if (data["status"] == 1){
+                            location.reload()
+                        }
+                    })
+                })
+
+                setTimeout("check()", 1000)
+        }
+
+    function send_message(){
+        var text = document.getElementById("send-text").value;
+        document.getElementById("send-text").value = "";
+        push = {
+            "content": text
+        }
+
+                fetch(`${window.origin}/json`, {
+                    method: "POST",
+                    credentials: "include",
+                    body: JSON.stringify(push),
+                    cache: "no-cache",
+                    headers: new Headers({
+                        "content-type": "application/json"
+                    })
+
+                })
+
+                .then(function (response){
+                    if (response.status !== 200){
+                        console.log("Status is not 200!");
+                        return ;
+                    }
+                    response.json().then(function (data){
+                        document.getElementById("messages").innerHTML += 
+                        '<div class="message-self">' +
+                            '<h2>{{user}}</h2>' +
+                            '<h3>'+text+'</h3>' +
+                            '<h4>'+data["date"]+'</h4>'
+                        '</div>'
+                    })
+                })
+    }
+</script>
+{% endblock %}
