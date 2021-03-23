@@ -1,5 +1,6 @@
 body{
     background-color: rgb(231, 231, 231);
+    overflow: hidden;
 }
 
 *{
@@ -102,7 +103,22 @@ body{
     border-top: 3px solid rgba(0, 0, 0, 0.1);
     border-left: 3px solid rgba(0, 0, 0, 0.1);
     border-right: 3px solid rgba(0, 0, 0, 0.1);
+    overflow-y: scroll;
 }
+
+#messages::-webkit-scrollbar {
+    width: 1em;
+  }
+   
+  #messages::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
+   
+  #messages::-webkit-scrollbar-thumb {
+    background-color: rgb(226, 226, 226);
+    border-radius: 20px;
+    outline: none;
+  }
 
 .message, .message-self{
     clear: both;
@@ -123,6 +139,7 @@ body{
 
 .message-self{
     float: right;
+    margin-right: 10px;
 }
 
 .message h2, .message-self h2{
@@ -152,4 +169,86 @@ body{
     float: right;
     height: 74px;
     width: 10%;
+}
+
+@media screen and (max-width: 459px){
+    #login-content form input{
+        font-size: 20px;
+    }
+    
+    #login-button, #register-button{
+        font-size: 18px;
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 1300px){
+    #chat-container{
+        height: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+            ". h1 h1 h1 h1 . "
+            ". area1 area1 area1 area1 ."
+            ". area1 area1 area1 area1 ."
+            ". area2 area2 area2 area2 ."
+        ;
+    }
+    
+    #chat-container h1{
+        font-size: 50px;
+    }
+
+}
+
+@media screen and (max-width: 985px){
+    
+    #chat-container h1{
+        font-size: 50px;
+    }
+
+    .message, .message-self{
+        width: 200px;
+    }
+    
+    .message h2, .message-self h2{
+        font-size: 18px;
+    }
+    .message h3, .message-self h3{
+        font-size: 16px;
+    }
+    .message h4, .message-self h4{
+        font-size: 14px;
+    }
+
+}
+
+@media screen and (max-width: 714px){
+    #chat-container{
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        grid-template-areas: 
+            "h1 h1 h1 "
+            "area1 area1 area1"
+            "area1 area1 area1"
+            "area2 area2 area2"
+        ;
+    }
+}
+
+@media screen and (max-width: 439px){
+    .message, .message-self{
+        width: 155px;
+    }
+    
+    .message h2, .message-self h2{
+        font-size: 16px;
+    }
+    .message h3, .message-self h3{
+        font-size: 14px;
+    }
+    .message h4, .message-self h4{
+        font-size: 12px;
+    }
 }

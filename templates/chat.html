@@ -31,7 +31,7 @@
 {% block script %}
 <script>
     window.onload = check;
-
+    $('#messages').scrollTop($('#messages')[0].scrollHeight);
     function check(){
                 fetch(`${window.origin}/check`, {
                     method: "POST",

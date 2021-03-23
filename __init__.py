@@ -97,7 +97,8 @@ def logout():
     session.pop("name")
     return redirect(url_for("login"))
 
-#Test only
+
+###Test only###
 @app.route("/list")
 def list():
     listx = Users.query.all()
@@ -117,6 +118,8 @@ def reset_users():
     db.session.commit()
     session.pop("name")
     return "Done"
+
+###################
 
 @app.route("/json", methods=["POST"])
 def json():
